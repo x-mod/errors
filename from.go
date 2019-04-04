@@ -27,10 +27,14 @@ func CodeFrom(err error) Code {
 
 //ValueFrom get code value from error
 //-1 means null code value
+//0 means OK
 func ValueFrom(err error) int {
-	code := CodeFrom(err)
-	if code != nil {
-		return int(code.Value())
+	if err != nil {
+		code := CodeFrom(err)
+		if code != nil {
+			return int(code.Value())
+		}
+		return -1
 	}
-	return -1
+	return 0
 }
