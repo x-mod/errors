@@ -38,3 +38,13 @@ func ValueFrom(err error) int {
 	}
 	return 0
 }
+
+//CauseFrom get original error
+func CauseFrom(err error) error {
+	if err != nil {
+		if cause, ok := err.(causer); ok {
+			return cause.Cause()
+		}
+	}
+	return err
+}
