@@ -1,6 +1,8 @@
 package errors
 
-import "testing"
+import (
+	"testing"
+)
 
 func Test_annotator_Error(t *testing.T) {
 	type fields struct {
@@ -242,12 +244,73 @@ func TestValueFrom(t *testing.T) {
 			},
 			-1,
 		},
+		{
+			"no error",
+			fields{
+				nil,
+			},
+			0,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			ce := tt.fields.err
 			if got := ValueFrom(ce); got != tt.want {
 				t.Errorf("ValueFrom error = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestWithStack(t *testing.T) {
+	type args struct {
+		err error
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"stack error",
+			args{
+				New("origin"),
+			},
+			true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := WithStack(tt.args.err); (err != nil) != tt.wantErr {
+				t.Errorf("WithStack() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestErrorf(t *testing.T) {
+	type args struct {
+		format string
+		args   []interface{}
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"errorf",
+			args{
+				"format err: %v",
+				[]interface{}{false},
+			},
+			true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := Errorf(tt.args.format, tt.args.args...); (err != nil) != tt.wantErr {
+				t.Errorf("Errorf() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
