@@ -204,59 +204,18 @@ func Test_codeErr_Error(t *testing.T) {
 			},
 			"2: NumTwoErr",
 		},
+		{
+			"code error",
+			fields{
+				CodeError(&errorCode{3, ""}),
+			},
+			"3: Error(3)",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.fields.err.Error(); got != tt.want {
 				t.Errorf("codeErr.Error() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestValueFrom(t *testing.T) {
-	type fields struct {
-		err error
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		want   int
-	}{
-		{
-			"normal error",
-			fields{
-				WithCode(New("error reason"), &errorCode{1, "NumOneErr"}),
-			},
-			1,
-		},
-		{
-			"code error",
-			fields{
-				CodeError(&errorCode{2, "NumTwoErr"}),
-			},
-			2,
-		},
-		{
-			"no code error",
-			fields{
-				New("error"),
-			},
-			-1,
-		},
-		{
-			"no error",
-			fields{
-				nil,
-			},
-			0,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			ce := tt.fields.err
-			if got := ValueFrom(ce); got != tt.want {
-				t.Errorf("ValueFrom error = %v, want %v", got, tt.want)
 			}
 		})
 	}
