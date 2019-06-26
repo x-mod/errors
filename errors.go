@@ -12,7 +12,7 @@ type causer interface {
 }
 
 type coder interface {
-	Value() uint32
+	Value() int32
 }
 
 //New errorstring error

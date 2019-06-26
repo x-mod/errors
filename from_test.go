@@ -45,7 +45,7 @@ func TestValueFrom(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   int
+		want   int32
 	}{
 		{
 			"normal error",
