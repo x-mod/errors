@@ -20,7 +20,7 @@ func Test_annotator_Error(t *testing.T) {
 				New("origin error"),
 				"annotation",
 			},
-			"annotation: origin error",
+			"annotation origin error",
 		},
 	}
 	for _, tt := range tests {
@@ -195,21 +195,21 @@ func Test_codeErr_Error(t *testing.T) {
 			fields{
 				WithCode(New("error reason"), &errorCode{2, "NumTwoErr"}),
 			},
-			"2: error reason",
+			"error reason",
 		},
 		{
 			"code error",
 			fields{
 				CodeError(&errorCode{2, "NumTwoErr"}),
 			},
-			"2: NumTwoErr",
+			"NumTwoErr",
 		},
 		{
 			"code error",
 			fields{
 				CodeError(&errorCode{3, ""}),
 			},
-			"3: Error(3)",
+			"Error(3)",
 		},
 	}
 	for _, tt := range tests {
