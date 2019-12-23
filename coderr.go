@@ -1,8 +1,6 @@
 package errors
 
 import (
-	"fmt"
-
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -38,7 +36,7 @@ func CodeError(code Code) error {
 }
 
 func (ce *codeErr) Error() string {
-	return fmt.Sprintf("%d: %s", ce.code.Value(), ce.err.Error())
+	return ce.err.Error()
 }
 
 func (ce *codeErr) Cause() error {
@@ -49,7 +47,7 @@ func (ce *codeErr) Value() int32 {
 	if ce.code != nil {
 		return ce.code.Value()
 	}
-	return 0
+	return -1
 }
 
 //GRPCStatus make codeErr support grpc status
