@@ -7,8 +7,8 @@ import (
 	stackerr "github.com/pkg/errors"
 )
 
-type causer interface {
-	Cause() error
+type wrapping interface {
+	Unwrap() error
 }
 
 type coder interface {
@@ -23,6 +23,21 @@ func New(err string) error {
 //Errorf standard func
 func Errorf(format string, args ...interface{}) error {
 	return fmt.Errorf(format, args...)
+}
+
+//As standard func
+func As(err error, target interface{}) bool {
+	return errors.As(err, target)
+}
+
+//Is standard func
+func Is(err, target error) bool {
+	return errors.Is(err, target)
+}
+
+//Unwrap standard func
+func Unwrap(err error) error {
+	return errors.Unwrap(err)
 }
 
 //WithStack error

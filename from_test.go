@@ -19,7 +19,7 @@ func TestCauseFrom(t *testing.T) {
 			args{
 				New("origin"),
 			},
-			true,
+			false,
 		},
 		{
 			"cause from error",
@@ -31,8 +31,8 @@ func TestCauseFrom(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := CauseFrom(tt.args.err); (err != nil) != tt.wantErr {
-				t.Errorf("CauseFrom() error = %v, wantErr %v", err, tt.wantErr)
+			if err := Unwrap(tt.args.err); (err != nil) != tt.wantErr {
+				t.Errorf("Unwrap() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
@@ -50,14 +50,14 @@ func TestValueFrom(t *testing.T) {
 		{
 			"normal error",
 			fields{
-				WithCode(New("error reason"), &errorCode{1, "NumOneErr"}),
+				WithCode(New("error reason"), ErrCode(1)),
 			},
 			1,
 		},
 		{
 			"code error",
 			fields{
-				CodeError(&errorCode{2, "NumTwoErr"}),
+				ErrCode(2),
 			},
 			2,
 		},

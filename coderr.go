@@ -39,7 +39,7 @@ func (ce *codeErr) Error() string {
 	return ce.err.Error()
 }
 
-func (ce *codeErr) Cause() error {
+func (ce *codeErr) Unwrap() error {
 	return ce.err
 }
 

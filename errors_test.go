@@ -1,6 +1,8 @@
 package errors
 
 import (
+	"errors"
+
 	"testing"
 )
 
@@ -25,10 +27,7 @@ func Test_annotator_Error(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := &annotator{
-				err:        tt.fields.err,
-				annotation: tt.fields.annotation,
-			}
+			err := Annotate(tt.fields.err, tt.fields.annotation)
 			if got := err.Error(); got != tt.want {
 				t.Errorf("annotator.Error() = %v, want %v", got, tt.want)
 			}
@@ -47,7 +46,7 @@ func Test_annotator_Cause(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"cause",
+			"unwrap",
 			fields{
 				New("origin error"),
 				"annotation comments",
@@ -57,12 +56,9 @@ func Test_annotator_Cause(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			e := &annotator{
-				err:        tt.fields.err,
-				annotation: tt.fields.annotation,
-			}
-			if err := e.Cause(); (err == tt.fields.err) != tt.wantErr {
-				t.Errorf("annotator.Cause() error = %v, wantErr %v", err, tt.wantErr)
+			e := Annotate(tt.fields.err, tt.fields.annotation)
+			if err := errors.Unwrap(e); (err == tt.fields.err) != tt.wantErr {
+				t.Errorf("errors.Unwrap error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
@@ -118,7 +114,7 @@ func TestWithCode(t *testing.T) {
 			"normal",
 			args{
 				New("error"),
-				&errorCode{1, "NumOneErr"},
+				ErrCode(1),
 			},
 			true,
 		},
@@ -126,7 +122,7 @@ func TestWithCode(t *testing.T) {
 			"abnormal",
 			args{
 				nil,
-				&errorCode{2, "NumOneErr"},
+				ErrCode(2),
 			},
 			false,
 		},
@@ -160,7 +156,7 @@ func TestCodeError(t *testing.T) {
 		{
 			"normal",
 			args{
-				&errorCode{1, "NumOneErr"},
+				ErrCode(1),
 			},
 			true,
 		},
@@ -193,23 +189,23 @@ func Test_codeErr_Error(t *testing.T) {
 		{
 			"normal error",
 			fields{
-				WithCode(New("error reason"), &errorCode{2, "NumTwoErr"}),
+				WithCode(New("error reason"), ErrCode(2)),
 			},
 			"error reason",
 		},
 		{
 			"code error",
 			fields{
-				CodeError(&errorCode{2, "NumTwoErr"}),
+				ErrCode(2),
 			},
-			"NumTwoErr",
+			"ErrCode(2)",
 		},
 		{
 			"code error",
 			fields{
-				CodeError(&errorCode{3, ""}),
+				ErrCode(3),
 			},
-			"Error(3)",
+			"ErrCode(3)",
 		},
 	}
 	for _, tt := range tests {

@@ -1,3 +1,5 @@
+// +build !go1.13
+
 package errors
 
 import (
@@ -30,7 +32,7 @@ func (err *annotator) Error() string {
 	return fmt.Sprintf("%s %s", err.annotation, err.err.Error())
 }
 
-//Cause annotator implemention
-func (e *annotator) Cause() error {
+//Unwrap annotator implemention
+func (e *annotator) Unwrap() error {
 	return e.err
 }
