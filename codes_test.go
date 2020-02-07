@@ -21,8 +21,8 @@ func TestValueErr(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := ErrCode(tt.args.v); Is(err, ErrCode(tt.args.v)) != tt.wantErr {
-				t.Errorf("ValueErr() error = %v, wantErr %v", err, tt.wantErr)
+			if err := ErrNo(tt.args.v); Is(err, ErrNo(tt.args.v)) != tt.wantErr {
+				t.Errorf("ErrNo() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}

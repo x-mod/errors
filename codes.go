@@ -4,24 +4,16 @@ import (
 	"fmt"
 )
 
-type ErrCode int32
+type ErrNo int32
 
-func (e ErrCode) Value() int32 {
+func (e ErrNo) Value() int32 {
 	return int32(e)
 }
 
-func (e ErrCode) String() string {
-	return fmt.Sprintf("ErrCode(%d)", e)
+func (e ErrNo) String() string {
+	return fmt.Sprintf("ErrNo(%d)", e)
 }
 
-func (e ErrCode) Error() string {
+func (e ErrNo) Error() string {
 	return e.String()
-}
-
-//ValueErr pure value error
-func ValueErr(v int32) error {
-	if v != 0 {
-		return ErrCode(v)
-	}
-	return nil
 }

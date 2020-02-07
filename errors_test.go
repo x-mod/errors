@@ -114,7 +114,7 @@ func TestWithCode(t *testing.T) {
 			"normal",
 			args{
 				New("error"),
-				ErrCode(1),
+				ErrNo(1),
 			},
 			true,
 		},
@@ -122,7 +122,7 @@ func TestWithCode(t *testing.T) {
 			"abnormal",
 			args{
 				nil,
-				ErrCode(2),
+				ErrNo(2),
 			},
 			false,
 		},
@@ -156,7 +156,7 @@ func TestCodeError(t *testing.T) {
 		{
 			"normal",
 			args{
-				ErrCode(1),
+				ErrNo(1),
 			},
 			true,
 		},
@@ -189,23 +189,23 @@ func Test_codeErr_Error(t *testing.T) {
 		{
 			"normal error",
 			fields{
-				WithCode(New("error reason"), ErrCode(2)),
+				WithCode(New("error reason"), ErrNo(2)),
 			},
 			"error reason",
 		},
 		{
 			"code error",
 			fields{
-				ErrCode(2),
+				ErrNo(2),
 			},
-			"ErrCode(2)",
+			"ErrNo(2)",
 		},
 		{
 			"code error",
 			fields{
-				ErrCode(3),
+				ErrNo(3),
 			},
-			"ErrCode(3)",
+			"ErrNo(3)",
 		},
 	}
 	for _, tt := range tests {

@@ -19,7 +19,7 @@ func Test_codeErr_Cause(t *testing.T) {
 		{
 			"cause",
 			fields{
-				code: ErrCode(1),
+				code: ErrNo(1),
 				err:  New("origin"),
 			},
 			true,
@@ -49,7 +49,7 @@ func Test_codeErr_Value(t *testing.T) {
 		{
 			"value",
 			fields{
-				code: ErrCode(1),
+				code: ErrNo(1),
 				err:  New("origin"),
 			},
 			1,

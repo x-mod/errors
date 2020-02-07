@@ -50,14 +50,14 @@ func TestValueFrom(t *testing.T) {
 		{
 			"normal error",
 			fields{
-				WithCode(New("error reason"), ErrCode(1)),
+				WithCode(New("error reason"), ErrNo(1)),
 			},
 			1,
 		},
 		{
 			"code error",
 			fields{
-				ErrCode(2),
+				ErrNo(2),
 			},
 			2,
 		},
