@@ -6,8 +6,7 @@ extension of errors for the following features:
 
 - annotation error
 - error with code, support grpc error code
-- error by value
-- error with stack
+- error with stack use pkg/errors
 
 ## Quick Start
 
@@ -26,10 +25,6 @@ v2 := errors.ValueFrom(e2)
 
 e3 := errors.WithStack(err)
 //print stack info
-fmt.Printf("%v", e3)
-
-//pure value error
-e4 := errors.ValueErr(5)
-v4 := errors.ValueFrom(e4)
+fmt.Printf("%+v", e3)
 
 ````
