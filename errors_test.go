@@ -217,32 +217,6 @@ func Test_codeErr_Error(t *testing.T) {
 	}
 }
 
-func TestWithStack(t *testing.T) {
-	type args struct {
-		err error
-	}
-	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
-	}{
-		{
-			"stack error",
-			args{
-				New("origin"),
-			},
-			true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if err := WithStack(tt.args.err); (err != nil) != tt.wantErr {
-				t.Errorf("WithStack() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
-}
-
 func TestErrorf(t *testing.T) {
 	type args struct {
 		format string
