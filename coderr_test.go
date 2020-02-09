@@ -54,6 +54,14 @@ func Test_codeErr_Value(t *testing.T) {
 			},
 			1,
 		},
+		{
+			"value2",
+			fields{
+				code: ErrNo(2),
+				err:  New("origin2"),
+			},
+			2,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

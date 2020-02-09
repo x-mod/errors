@@ -6,7 +6,6 @@ extension of errors for the following features:
 
 - annotation error
 - error with code, support grpc error code
-- error with stack use pkg/errors
 
 ## Quick Start
 
@@ -19,12 +18,8 @@ e1 := errors.Annotate(err, "annotations")
 e11 := errors.Annotatef(err, "annotations %s", "format")
 
 //code error
-e2 := errors.WithCode(err, YourCode)
+e2 := errors.WithCode(err, errors.ErrNo(100))
 //get error's code value
 v2 := errors.ValueFrom(e2)
-
-e3 := errors.WithStack(err)
-//print stack info
-fmt.Printf("%+v", e3)
 
 ````
